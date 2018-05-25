@@ -1,11 +1,14 @@
-import {GoogleMapReact, Marker} from 'google-map-react';
+import GoogleMapReact from 'google-map-react';
 import React from 'react';
+
+const reacCom = ({text}) => <div>{text}</div>;
 
 export default class MapContainer extends React.Component {
 
   state = {
     center: {lat: 30, lng: 50}
   }
+
 
   getLocation = () => {
       if (navigator.geolocation) {
@@ -27,18 +30,21 @@ export default class MapContainer extends React.Component {
  //  };
 
   render() {
-    this.getLocation();
+    // this.getLocation();
     console.log('in render', this.state.center)
     return (
       <div style={{ height: '100vh', width: '100%' }}>
       <GoogleMapReact
-      bootstrapURLKeys={{
-        key: "AIzaSyAF3laRwdxS7LqBHaCP5UbQX-ZKOOTFPwE"
-      }}
-        center={this.state.center}
-        defaultZoom={18}
-      >
-      <Marker lat={this.state.center.lat} lng={this.state.center.lng} />
+        bootstrapURLKeys={{
+          key: "AIzaSyAF3laRwdxS7LqBHaCP5UbQX-ZKOOTFPwE"
+        }}
+          center={this.state.center}
+          defaultZoom={18}>
+        <reacCom
+          lat={30}
+          lng={50}
+          text={"Zali"}
+        />
       </GoogleMapReact>
       </div>
     );
