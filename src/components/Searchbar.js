@@ -5,25 +5,25 @@ export default class Searchbar extends React.Component{
 
 	state = {
 		searchStr: "",
-		currentLat:0,
-		currentLng:0,
-
+		// currentLat:0,
+		// currentLng:0,
+		isSubmitted: false
 	}
 
-	componentWillMount() {
-      if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(this.success)
-      } else {
-          console.log("Geolocation is not supported by this browser.")
-      }
-  	}
-
-	success = (pos) => {
-		// console.log(pos.coords)
-	    this.setState({
-	      lat: pos.coords.latitude, lng: pos.coords.longitude
-	    });
-	}
+	// componentWillMount() {
+  //     if (navigator.geolocation) {
+  //         navigator.geolocation.getCurrentPosition(this.success)
+  //     } else {
+  //         console.log("Geolocation is not supported by this browser.")
+  //     }
+  // 	}
+	//
+	// success = (pos) => {
+	// 	// console.log(pos.coords)
+	//     this.setState({
+	//       lat: pos.coords.latitude, lng: pos.coords.longitude
+	//     });
+	// }
 
 	handleChange = (event) => {
 		console.log(event.target.value)
@@ -32,28 +32,33 @@ export default class Searchbar extends React.Component{
 		})
 	}
 
+
 	handleSubmit = (event) =>{
+		this.setState({
+			isSubmitted:true
+		})
 		event.preventDefault()
-		debugger
+		// debugger
 		fetch(`https://maps.googleapis.com/maps/api/place/radarsearch/json?location=${this.state.currentLat},${this.state.currentLng}&radius=50&type=${this.state.searchStr}&key=AIzaSyAF3laRwdxS7LqBHaCP5UbQX-ZKOOTFPwE`)
 		.then(resp => resp.json())
+	}
 
-
-
+	renderMap = () => {
+		return <NewMapContainer/>
 	}
 
 	 render(){
 	 	// this.getLocation()
 		  return(
-
 				<div className="search" >
-					<form onSubmit={this.handleSubmit}>
-			          <input type="text" placeholder="search here" onChange={this.handleChange}/>
+						<form onSubmit={this.handleSubmit}>
+				          <input type="text" placeholder="search here" onChange={this.handleChange}/>
 
-			        <input type="submit" value="Submit"/>
-			      </form>
-			    <NewMapContainer lat={this.state.lat} lng={this.state.lng}/>
+				        <input type="submit" value="Submit"/>
+				    </form>
+						{this.state.isSubmitted && this.renderMap()}
 				</div>
-		  );
+
+		  )
 	 }
 }
