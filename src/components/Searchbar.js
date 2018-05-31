@@ -5,23 +5,18 @@ export default class Searchbar extends React.Component{
 
 	state = {
 		searchStr: "",
+		typeStr:"",
 		// currentLat:0,
 		// currentLng:0,
 		isSubmitted: false
 	}
 
-	// componentWillMount() {
-  //     if (navigator.geolocation) {
-  //         navigator.geolocation.getCurrentPosition(this.success)
-  //     } else {
-  //         console.log("Geolocation is not supported by this browser.")
-  //     }
-  // 	}
-	//
+
+
 	// success = (pos) => {
 	// 	// console.log(pos.coords)
 	//     this.setState({
-	//       lat: pos.coords.latitude, lng: pos.coords.longitude
+	//       currentLat: pos.coords.latitude, currentLng: pos.coords.longitude
 	//     });
 	// }
 
@@ -32,31 +27,41 @@ export default class Searchbar extends React.Component{
 		})
 	}
 
-
 	handleSubmit = (event) =>{
+		event.preventDefault()
 		this.setState({
 			isSubmitted:true
 		})
-		event.preventDefault()
 		// debugger
-		fetch(`https://maps.googleapis.com/maps/api/place/radarsearch/json?location=${this.state.currentLat},${this.state.currentLng}&radius=50&type=${this.state.searchStr}&key=AIzaSyAF3laRwdxS7LqBHaCP5UbQX-ZKOOTFPwE`)
-		.then(resp => resp.json())
+		// fetch(`https://maps.googleapis.com/maps/api/place/radarsearch/json?location=${this.state.currentLat},${this.state.currentLng}&radius=50&type=${this.state.searchStr}&key=AIzaSyAF3laRwdxS7LqBHaCP5UbQX-ZKOOTFPwE`)
+		// .then(resp => resp.json())
 	}
 
+	handleTypeChange = (event) => {
+		console.log(event.target.value)
+		this.setState({
+			typeStr: event.target.value
+		})
+	}
+
+
 	renderMap = () => {
-		return <NewMapContainer/>
+		if(this.state.isSubmitted){
+			// debugger
+			return <NewMapContainer searchStr={this.state.searchStr} typeStr={this.state.typeStr}/>
+		}
 	}
 
 	 render(){
 	 	// this.getLocation()
 		  return(
 				<div className="search" >
-						<form onSubmit={this.handleSubmit}>
-				          <input type="text" placeholder="search here" onChange={this.handleChange}/>
-
+						<form onSubmit={this.handleSubmit} autocomplete='on'>
+				        <input type="text" placeholder="search here" onChange={this.handleChange}/>
+								<input type="text" placeholder="type" onChange={this.handleTypeChange}/>
 				        <input type="submit" value="Submit"/>
 				    </form>
-						{this.state.isSubmitted && this.renderMap()}
+					{this.renderMap()}
 				</div>
 
 		  )
