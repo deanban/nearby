@@ -6,7 +6,8 @@ export class NewMapContainer extends Component {
 	state = {
     	lat:0,
     	lng:0,
-			markerPostions:[]
+			markerPostions:[],
+			placesInfo:[]
   }
 
   componentWillMount(){
@@ -33,16 +34,28 @@ export class NewMapContainer extends Component {
 		.then(data => this.setState({markerPostions: data.results}))
 	}
 
+	fetchPlacesInfo = () =>{
+		// console.log("fethplaces", url)
+		this.state.markerPostions.map(x =>
+			fetch(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${x.place_id}&key=AIzaSyAF3laRwdxS7LqBHaCP5UbQX-ZKOOTFPwE`)
+			.then(resp => resp.json())
+			.then(data => console.log(data))
+			// .then(data => this.setState({placesInfo: [...this.state.placesInfo, data]}))
+	)}
+}
+
 	renderNearby = () => {
+		// const places = this.fetchPlacesInfo()
 		return(
 			<Map google={this.props.google} zoom={14}
       center={{ lat: this.state.lat, lng: this.state.lng }}
       >
-			{this.state.markerPostions.map((x, index) =>
+			{this.state.markerPostions.map(x =>
 				<Marker
 	        name="Current Location"
 	        position={{ lat: x.geometry.location.lat, lng: x.geometry.location.lng }}
 	        title="The marker`s title will appear as a tooltip."
+
         />
 			)}
 		</Map>
@@ -55,6 +68,8 @@ export class NewMapContainer extends Component {
     return (
       <div>
       	{this.renderNearby()}
+
+				{this.fetchPlacesInfo()}
       </div>
     );
   }
