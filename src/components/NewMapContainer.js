@@ -27,15 +27,18 @@ export class NewMapContainer extends Component {
   }
 
 	fetchNearby = () => {
-		let url = `https://maps.googleapis.com/maps/api/place/radarsearch/json?location=${this.state.lat},${this.state.lng}&radius=100&type=${this.props.searchStr}&keyword=${this.props.typeStr}&key=AIzaSyAF3laRwdxS7LqBHaCP5UbQX-ZKOOTFPwE`
-		let url2 = `https://maps.googleapis.com/maps/api/place/radarsearch/json?location=${this.state.lat},${this.state.lng}&radius=100&type=${this.props.searchStr}&key=AIzaSyAF3laRwdxS7LqBHaCP5UbQX-ZKOOTFPwE`
-		// console.log('in map', url)
-		if(!this.props.typeStr){
-			fetch(url2)
+		let urlWithTypestr = `https://maps.googleapis.com/maps/api/place/radarsearch/json?location=${this.state.lat},${this.state.lng}&radius=1000&type=${this.props.searchStr}&keyword=${this.props.typeStr}&key=AIzaSyAF3laRwdxS7LqBHaCP5UbQX-ZKOOTFPwE`
+		let urlWithoutTypestr = `https://maps.googleapis.com/maps/api/place/radarsearch/json?location=${this.state.lat},${this.state.lng}&radius=1000&type=${this.props.searchStr}&key=AIzaSyAF3laRwdxS7LqBHaCP5UbQX-ZKOOTFPwE`
+		console.log('in map urlWithTypest', urlWithTypestr)
+		console.log('in map urlWithoutTypestr', urlWithoutTypestr)
+		if(this.props.typeStr === ""){
+			console.log("urlWithoutTypestr ran")
+			fetch(urlWithoutTypestr)
 			.then(resp => resp.json())
 			.then(data => this.setState({markerPostions: data.results}))
 		}else{
-			fetch(url)
+			console.log("urlWithTypestr ran")
+			fetch(urlWithTypestr)
 			.then(resp => resp.json())
 			.then(data => this.setState({markerPostions: data.results}))
 		}
@@ -46,10 +49,10 @@ export class NewMapContainer extends Component {
 		this.state.markerPostions.map(x =>
 			fetch(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${x.place_id}&key=AIzaSyAF3laRwdxS7LqBHaCP5UbQX-ZKOOTFPwE`)
 			.then(resp => resp.json())
-			.then(data => console.log(data))
-			// .then(data => this.setState({placesInfo: [...this.state.placesInfo, data]}))
+			// .then(data => this.setState({placesInfo: data.result}))
+			.then(data => console.log('fetchplaces', data))
+
 	)}
-}
 
 	renderNearby = () => {
 		// const places = this.fetchPlacesInfo()

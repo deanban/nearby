@@ -56,7 +56,7 @@ export default class Searchbar extends React.Component{
 	 	// this.getLocation()
 		  return(
 				<div className="search" >
-						<form onSubmit={this.handleSubmit} autocomplete='on'>
+						<form onSubmit={this.handleSubmit} autoComplete='on'>
 				        <input type="text" placeholder="search here" onChange={this.handleChange}/>
 								<input type="text" placeholder="type" onChange={this.handleTypeChange}/>
 				        <input type="submit" value="Submit"/>
