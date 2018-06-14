@@ -17,7 +17,7 @@ export class NewMapContainer extends Component {
           console.log("Geolocation is not supported by this browser.")
       }
   }
-	//
+
 	success = (pos) => {
       console.log(pos.coords)
       this.setState({
@@ -28,10 +28,17 @@ export class NewMapContainer extends Component {
 
 	fetchNearby = () => {
 		let url = `https://maps.googleapis.com/maps/api/place/radarsearch/json?location=${this.state.lat},${this.state.lng}&radius=100&type=${this.props.searchStr}&keyword=${this.props.typeStr}&key=AIzaSyAF3laRwdxS7LqBHaCP5UbQX-ZKOOTFPwE`
+		let url2 = `https://maps.googleapis.com/maps/api/place/radarsearch/json?location=${this.state.lat},${this.state.lng}&radius=100&type=${this.props.searchStr}&key=AIzaSyAF3laRwdxS7LqBHaCP5UbQX-ZKOOTFPwE`
 		// console.log('in map', url)
-		fetch(url)
-		.then(resp => resp.json())
-		.then(data => this.setState({markerPostions: data.results}))
+		if(!this.props.typeStr){
+			fetch(url2)
+			.then(resp => resp.json())
+			.then(data => this.setState({markerPostions: data.results}))
+		}else{
+			fetch(url)
+			.then(resp => resp.json())
+			.then(data => this.setState({markerPostions: data.results}))
+		}
 	}
 
 	fetchPlacesInfo = () =>{
