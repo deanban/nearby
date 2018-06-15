@@ -1,5 +1,6 @@
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import React, { Component } from 'react';
+import Sidedock from "./Sidedock";
 
 export class NewMapContainer extends Component {
 
@@ -48,35 +49,35 @@ export class NewMapContainer extends Component {
 		}
 	}
 
-	fetchPlacesInfo = () =>{
+	fetchPlacesInfo = () => {
 		// console.log("fethplaces", url)
 		this.state.markerPostions.forEach(x =>
 			fetch(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${x.place_id}&key=AIzaSyAF3laRwdxS7LqBHaCP5UbQX-ZKOOTFPwE`)
-			.then(resp => resp.json())
-			.then(data => this.placeData.push(data))
+				.then(resp => resp.json())
+				.then(data => this.placeData.push(data))
 			// .then(data => this.setState({placesInfo: ...placesInfo + data.result}))
 			// .then(data => console.log('fetchplaces', data))
-	)
-	// this.setState({placesInfo: placeData})
-	console.log("placesData: ", this.placeData)
-	
-}
+		)
+		// this.setState({placesInfo: placeData})
+		console.log("placesData: ", this.placeData)
+
+	}
 
 	renderNearby = () => {
 		// const places = this.fetchPlacesInfo()
-		return(
-			<Map google={this.props.google} zoom={14}
-      center={{ lat: this.state.lat, lng: this.state.lng }}
-      >
-			{this.state.markerPostions.map(x =>
-				<Marker
-	        name="Current Location"
-	        position={{ lat: x.geometry.location.lat, lng: x.geometry.location.lng }}
-	        title="The marker`s title will appear as a tooltip."
+		return (
+			<Map google={ this.props.google } zoom={ 14 }
+				center={ { lat: this.state.lat, lng: this.state.lng } }
+			>
+				{ this.state.markerPostions.map(x =>
+					<Marker
+						name="Current Location"
+						position={ { lat: x.geometry.location.lat, lng: x.geometry.location.lng } }
+						title="The marker`s title will appear as a tooltip."
 
-        />
-			)}
-		</Map>
+					/>
+				) }
+			</Map>
 		)
 	}
 
@@ -84,10 +85,14 @@ export class NewMapContainer extends Component {
   render() {
     console.log('in map container', this.state)
 		// this.getLocation()
-		this.fetchPlacesInfo()
     return (
 			<div>
 				{this.renderNearby()}
+				{this.fetchPlacesInfo()}
+				<div>
+					<Sidedock placesData={this.placeData}/>
+				</div>
+				
 			</div>
     );
   }
