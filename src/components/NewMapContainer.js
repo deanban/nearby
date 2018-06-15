@@ -31,18 +31,20 @@ export class NewMapContainer extends Component {
 	fetchNearby = () => {
 		let urlWithTypestr = `https://maps.googleapis.com/maps/api/place/radarsearch/json?location=${this.state.lat},${this.state.lng}&radius=1000&type=${this.props.searchStr}&keyword=${this.props.typeStr}&key=AIzaSyAF3laRwdxS7LqBHaCP5UbQX-ZKOOTFPwE`
 		let urlWithoutTypestr = `https://maps.googleapis.com/maps/api/place/radarsearch/json?location=${this.state.lat},${this.state.lng}&radius=1000&type=${this.props.searchStr}&key=AIzaSyAF3laRwdxS7LqBHaCP5UbQX-ZKOOTFPwE`
+
 		console.log('in map urlWithTypest', urlWithTypestr)
 		console.log('in map urlWithoutTypestr', urlWithoutTypestr)
-		if(this.props.typeStr === ""){
+
+		if (this.props.typeStr === "") {
 			console.log("urlWithoutTypestr ran")
 			fetch(urlWithoutTypestr)
-			.then(resp => resp.json())
-			.then(data => this.setState({markerPostions: data.results}))
-		}else{
+				.then(resp => resp.json())
+				.then(data => this.setState({ markerPostions: data.results }))
+		} else {
 			console.log("urlWithTypestr ran")
 			fetch(urlWithTypestr)
-			.then(resp => resp.json())
-			.then(data => this.setState({markerPostions: data.results}))
+				.then(resp => resp.json())
+				.then(data => this.setState({ markerPostions: data.results }))
 		}
 	}
 
@@ -84,9 +86,9 @@ export class NewMapContainer extends Component {
 		// this.getLocation()
 		this.fetchPlacesInfo()
     return (
-      <div>
+			<div>
 				{this.renderNearby()}
-      </div>
+			</div>
     );
   }
 }
