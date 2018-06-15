@@ -1,5 +1,5 @@
 import React from 'react'
-import NewMapContainer from './NewMapContainer'
+import { NewMapContainer } from "./NewMapContainer";
 
 export default class Searchbar extends React.Component{
 

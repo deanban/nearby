@@ -57,6 +57,7 @@ export class NewMapContainer extends Component {
 	)
 	// this.setState({placesInfo: placeData})
 	console.log("placesData: ", this.placeData)
+	
 }
 
 	renderNearby = () => {
