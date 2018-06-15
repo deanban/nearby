@@ -6,9 +6,11 @@ export class NewMapContainer extends Component {
 	state = {
     	lat:0,
     	lng:0,
-			markerPostions:[],
-			placesInfo:[]
+			markerPostions:[]
+			// placesInfo: ""
   }
+
+	placeData = []
 
   componentWillMount(){
       if (navigator.geolocation) {
@@ -46,13 +48,16 @@ export class NewMapContainer extends Component {
 
 	fetchPlacesInfo = () =>{
 		// console.log("fethplaces", url)
-		this.state.markerPostions.map(x =>
+		this.state.markerPostions.forEach(x =>
 			fetch(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${x.place_id}&key=AIzaSyAF3laRwdxS7LqBHaCP5UbQX-ZKOOTFPwE`)
 			.then(resp => resp.json())
-			// .then(data => this.setState({placesInfo: data.result}))
-			.then(data => console.log('fetchplaces', data))
-
-	)}
+			.then(data => this.placeData.push(data))
+			// .then(data => this.setState({placesInfo: ...placesInfo + data.result}))
+			// .then(data => console.log('fetchplaces', data))
+	)
+	// this.setState({placesInfo: placeData})
+	console.log("placesData: ", this.placeData)
+}
 
 	renderNearby = () => {
 		// const places = this.fetchPlacesInfo()
@@ -72,14 +77,14 @@ export class NewMapContainer extends Component {
 		)
 	}
 
+
   render() {
     console.log('in map container', this.state)
 		// this.getLocation()
+		this.fetchPlacesInfo()
     return (
       <div>
-      	{this.renderNearby()}
-
-				{this.fetchPlacesInfo()}
+				{this.renderNearby()}
       </div>
     );
   }
