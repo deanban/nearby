@@ -15,7 +15,6 @@ import './assets/index.less';
 // const MenuItemGroup = Menu.ItemGroup;
 // const Panel = Collapse.Panel;
 
-
 class Sidedock extends Component {
 
     capitalizeFirstLetter = (str) => {
@@ -24,10 +23,17 @@ class Sidedock extends Component {
             str[i] = str[i][0].toUpperCase() + str[i].slice(1)
         }
         return str.join(" ")
+    } 
+
+    renderList = () => {
+        this.props.placesData.map(items => 
+            <ListItems addr={items.result.formatted_address} num={items.result.formatted_phone_number} name={items.result.name}/>
+        )
     }
 
     render() {
         console.log('sidedock', this.props)
+
         return (
             <div className="parent-demo">
                 {/* <Badge count={this.props.count} showZero> */ }
@@ -38,16 +44,12 @@ class Sidedock extends Component {
                         defaultOpenKeys={ ['sub1'] }
                         mode="inline"
                     >
-                    
+                
                         <div className="menuCount">
                             <h4>{this.capitalizeFirstLetter(`there are ${this.props.count} ${this.props.searchstr} found near you.`)}</h4>
                         </div>
 
-                        <div>
-                            {this.props.placesData.map(items => 
-                                <ListItems addr={items.result.formatted_address} num={items.result.formatted_phone_number} name={items.result.name}/>
-                            )}
-                        </div>
+                        {this.renderList()}
 
                     </Menu>
                 </Drawer>
