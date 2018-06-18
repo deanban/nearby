@@ -26,9 +26,7 @@ class Sidedock extends Component {
     } 
 
     renderList = () => {
-        this.props.placesData.map(items => 
-            <ListItems addr={items.result.formatted_address} num={items.result.formatted_phone_number} name={items.result.name}/>
-        )
+        debugger
     }
 
     render() {
@@ -49,14 +47,16 @@ class Sidedock extends Component {
                             <h4>{this.capitalizeFirstLetter(`there are ${this.props.count} ${this.props.searchstr} found near you.`)}</h4>
                         </div>
 
-                        {this.renderList()}
+                        <div>
+                        
+                        </div>
 
                     </Menu>
                 </Drawer>
                 {/* </Badge> */ }
+                {/* {this.renderList()} */}
             </div>
         )
-
     }
 }
 
