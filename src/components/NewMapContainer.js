@@ -59,7 +59,7 @@ export class NewMapContainer extends Component {
 			// .then(data => console.log('fetchplaces', data))
 		)
 		// this.setState({placesInfo: placeData})
-		console.log("placesData: ", this.placeData)
+		// console.log("placesData: ", this.placeData)
 
 	}
 
@@ -90,7 +90,7 @@ export class NewMapContainer extends Component {
 				{this.renderNearby()}
 				{this.fetchPlacesInfo()}
 				<div>
-					<Sidedock placesData={this.placeData}/>
+					<Sidedock placesData={this.placeData} count={this.state.markerPostions.length} searchstr={this.props.searchStr}/>
 				</div>
 				
 			</div>
