@@ -81,15 +81,22 @@ export class NewMapContainer extends Component {
 		)
 	}
 
+	// renderSidedock = () => {
+	// 	setTimeout(() => {
+	// 		return(<Sidedock placesData={this.placeData} count={this.state.markerPostions.length} searchstr={this.props.searchStr}/>)
+	// 	}, 4000);
+	// }
+
 
   render() {
     console.log('in map container', this.state)
 		// this.getLocation()
+		this.fetchPlacesInfo()
     return (
 			<div>
 				{this.renderNearby()}
-				{this.fetchPlacesInfo()}
-				<div>
+				<div className="splitpane">
+
 					<Sidedock placesData={this.placeData} count={this.state.markerPostions.length} searchstr={this.props.searchStr}/>
 				</div>
 				

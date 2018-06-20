@@ -22,40 +22,15 @@
   font-size: large;
 }
 
-.sidedock{
-  position: relative;
-  min-width: 50px;
+.splitpane {
+  width: 100%;
+  height:1000px;
 }
 
-.menuCount{
-  text-align: justify;
-  text-justify: inter-word;
-}
-
-#navcontainer ul
-{
-margin: 0;
-padding: 0;
-list-style-type: none;
-}
-
-#navcontainer li { margin: 0; }
-
-#navcontainer a
-{
-display: block;
-color: #FFF;
-background-color: #036;
-width: 9em;
-padding: 3px 12px 3px 8px;
-text-decoration: none;
-border-bottom: 1px solid #fff;
-}
-
-#navcontainer a:hover
-{
-background-color: #369;
-color: #FFF;
+.splitpane-left{
+  float:left;
+  width:30%;
+  height: 500px;
 }
 
 @keyframes App-logo-spin {

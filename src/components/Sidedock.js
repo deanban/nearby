@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 // import Drawer from 'react-motion-drawer';
 import Drawer from 'rc-drawer';
 import { Menu } from 'antd';
-import ListItems from './ListItems';
+// import ListItems from './ListItems';
 
 import 'antd/lib/style';
 import 'antd/lib/menu/style';
@@ -26,36 +26,20 @@ class Sidedock extends Component {
     } 
 
     renderList = () => {
-        debugger
+            return this.props.placesData.map(items => <li>{items.result.name}</li>)
     }
 
     render() {
         console.log('sidedock', this.props)
 
         return (
-            <div className="parent-demo">
-                {/* <Badge count={this.props.count} showZero> */ }
-                <Drawer getContainer={ null }>
-                    <Menu
-                        style={ { width: 500 } }
-                        defaultSelectedKeys={ ['1'] }
-                        defaultOpenKeys={ ['sub1'] }
-                        mode="inline"
-                    >
-                
-                        <div className="menuCount">
-                            <h4>{this.capitalizeFirstLetter(`there are ${this.props.count} ${this.props.searchstr} found near you.`)}</h4>
-                        </div>
+         
 
-                        <div>
-                        
-                        </div>
-
-                    </Menu>
-                </Drawer>
-                {/* </Badge> */ }
-                {/* {this.renderList()} */}
-            </div>
+                    <div className='splitpane-left'>
+                        <ul>
+                            {this.renderList()}
+                        </ul>
+                    </div>
         )
     }
 }
